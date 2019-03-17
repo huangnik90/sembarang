@@ -4,6 +4,7 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
 import Product from './components/product'
+import Cart from './components/cart'
 import ManageProduct from './components/manageProduct'
 import PageNotFound from './components/404'
 import ProductDetail from './components/productDetail'
@@ -33,6 +34,7 @@ class App extends Component {
               <Switch>
                 <Route path='/' component={Home} exact/>
                 <Route path='/login' component={Login} />
+                <Route path='/cart' component={Cart} />
                 <Route path='/register' component={Register} />
                 <Route path='/product' component={Product} />
                 <Route path='/productdetail/:terserah' component={ProductDetail} />

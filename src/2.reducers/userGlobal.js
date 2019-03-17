@@ -39,6 +39,8 @@ export default (state = INITIAL_STATE, action) => {
             return INITIAL_STATE
         case "USERNAME_NOT_AVAILABLE":
             return {...INITIAL_STATE,error:"Username uda ada"}
+        case "CART_ADD":
+            return {...INITIAL_STATE,cart:action.payload}
         default:
             return state
     

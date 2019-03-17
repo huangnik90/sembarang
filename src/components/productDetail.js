@@ -2,6 +2,7 @@ import React from 'react'
 import Axios from 'axios'
 import { urlApi } from '../support/urlApi';
 import { connect} from 'react-redux'
+import swal from'sweetalert'
 
 class ProductDetail extends React.Component{
     state = {product:{},quantity:""}
@@ -27,6 +28,53 @@ class ProductDetail extends React.Component{
         })
         .catch((err)=>console.log(err))
     }
+    
+
+    addCart = (data) => {    
+        Axios.get(urlApi+'/product?id='+ data.id)
+         .then((res) => {
+             var username = this.props.username
+             var userId = this.props.id
+             var productId = res.data[0].id
+             var nama = res.data[0].nama
+             var harga = res.data[0].harga
+             var desc = res.data[0].desc
+             var diskon = res.data[0].diskon
+             var category = res.data[0].category
+             var img = res.data[0].img
+             var quantity=parseInt(this.refs.quantity.value)
+             var newData = {
+                 username, userId, productId, nama,
+                 harga, diskon, category, img,desc,quantity
+             }
+             Axios.get(urlApi+'/cart?userId='+this.props.id+'&productId='+newData.productId)
+                 .then((res) => {
+                     if(res.data.length > 0){
+                         var quantity = res.data[0].quantity+parseInt(this.refs.quantity.value)
+                         Axios.put(urlApi+'/cart/'+res.data[0].id,{...newData, quantity})
+                             .then((res) =>{
+                                 console.log(res)
+                                 swal('Success', 'Item added to Cart', 'success')
+                             })
+                             .catch((err) => {
+                                 console.log(err)
+                             }) 
+                     } else {
+                         Axios.post(urlApi+'/cart', {...newData})
+                             .then((res) =>{
+                                 console.log(res)
+                                 swal('Success', 'Item added to Cart', 'success')
+                             })
+                             .catch((err) => {
+                                 console.log(err)
+                             })
+                     }
+                 })
+         })
+         .catch((err) => console.log(err))
+ }
+
+
     render()
     {
         var {nama,harga,diskon,desc,img} = this.state.product
@@ -84,7 +132,7 @@ class ProductDetail extends React.Component{
                             <div className="col-md-8 col-8">
                             <input className="btn border-secondary col-md-4" value="Add To Wishlist"></input>
                             <input className="btn border-primary col-md-4" value="Beli Sekarang"></input>
-                            <input className="btn border-success col-md-4" value="Masukan Keranjang"></input>
+                            <input className="btn border-success col-md-4" onClick={()=>this.addCart(this.state.product)} value="Masukan Keranjang"></input>
                             </div>
                             :
                             <div className="col-md-8 col-8">
@@ -115,7 +163,7 @@ class ProductDetail extends React.Component{
 
 const mapStatetoProps =(state)=>{
     return {
-        
+        id:state.user.id,
         user :state.user.username,
         role :state.user.role
     }

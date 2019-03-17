@@ -76,7 +76,7 @@ class HeaderKu extends Component{
                                    <NavLink>{this.props.pass} Hi, {this.props.username}</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                <Link to="/"><NavLink className="btn btn-default border-primary" style={{fontSize:"14px"}}><i class="fas fa-shopping-cart"/> Cart </NavLink></Link>
+                                <Link to="/cart"><NavLink className="btn btn-default border-primary" style={{fontSize:"14px"}}><i class="fas fa-shopping-cart"/> Cart </NavLink></Link>
                                 </NavItem>
                                 <NavItem>
                                 <Link to="/Product"><NavLink className="btn btn-default" style={{fontSize:"14px"}}><i class="fas fa-tags"/> Product </NavLink></Link>
