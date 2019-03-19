@@ -5,9 +5,10 @@ import { urlApi} from '../support/urlApi'
 import '../support/product.css'
 import {connect} from 'react-redux'
 import swal from 'sweetalert'
+import {cartLength} from '../1.actions'
 
 class Product extends React.Component{
-    state= {listProduct:[],newCart:[]}
+    state= {listProduct:[],newCart:[],cart:0}
     //PASTI DI PAKE UNTUK SHOW PRODUCT ATAU MENAMPILKAN DATA
     //SETEKAG REBDER BARU DI PANNGGIL
     componentDidMount(){
@@ -138,6 +139,8 @@ class Product extends React.Component{
                                  console.log(err)
                              }) 
                      } else {
+                         this.setState({cart:this.state.cart+1})
+                         this.props.cartLength(this.state.cart)
                          axios.post(urlApi+'/cart', {...newData, quantity : 1})
                              .then((res) =>{
                                  console.log(res)
@@ -225,4 +228,4 @@ const mapStateToProps = (state) =>{
     }
    
 }
-export default connect (mapStateToProps)(Product);
+export default connect (mapStateToProps,{cartLength})(Product);

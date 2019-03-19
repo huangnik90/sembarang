@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
 import cookie from 'universal-cookie'
 import {resetUser} from '../1.actions'
+import axios from 'axios'
 
 const kokie = new cookie()
 class HeaderKu extends Component{
