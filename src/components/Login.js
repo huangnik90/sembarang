@@ -10,6 +10,7 @@ const kokie = new cookie()
 class Login extends React.Component{
     //akan ke trigger ketika ada perubahan di props(global state)
     componentWillReceiveProps(newProps){
+    
         kokie.set('userData',newProps.username,{path:'/'})
     }
     onBtnLoginClick = ()=>{

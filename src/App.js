@@ -16,6 +16,7 @@ import { Route,withRouter,Switch } from 'react-router-dom'
 import './App.css';
 import cookie from 'universal-cookie'
 import ScrollTop from './components/scrollToTop'
+import {cookieChecked} from './1.actions'
 
 const kookie = new cookie()
 class App extends Component {
@@ -24,32 +25,44 @@ class App extends Component {
       var usernameCookie = kookie.get('userData')
       if (usernameCookie!== undefined){
         this.props.keepLogin(usernameCookie)
+      }else{
+        this.props.cookieChecked()
       }
     
   }
   
   render() {
-    return (
-      <div>
-        <ScrollTop>
-            <Navbar/>
-              <Switch>
-                <Route path='/' component={Home} exact/>
-                <Route path='/login' component={Login} />
-                <Route path='/cart' component={Cart} />
-                <Route path='/register' component={Register} />
-                <Route path='/product' component={Product} />
-                <Route path='/productdetail/:terserah' component={ProductDetail} />
-                <Route path='/addproduct' component={ManageProduct} />
-                <Route path='/history' component={History} />
-                <Route path='*' component={PageNotFound} />
-              </Switch>
-        </ScrollTop>
-
-      </div>
-    );
+    if (this.props.cookie){
+      return (
+        <div>
+          <ScrollTop>
+              <Navbar/>
+                <Switch>
+                  <Route path='/' component={Home} exact/>
+                  <Route path='/login' component={Login} />
+                  <Route path='/cart' component={Cart} />
+                  <Route path='/register' component={Register} />
+                  <Route path='/product' component={Product} />
+                  <Route path='/productdetail/:terserah' component={ProductDetail} />
+                  <Route path='/addproduct' component={ManageProduct} />
+                  <Route path='/history' component={History} />
+                  <Route path='*' component={PageNotFound} />
+                </Switch>
+          </ScrollTop>
+  
+        </div>
+      );
+    }
+      return <div> ... LOADING</div>
+    
+    
   }
 }
 
+const mapStateToState = (state)=>{
+  return {
+    cookie:state.user.cookie
+  }
+}
 
-export default withRouter (connect(null,{keepLogin})(App));
+export default withRouter (connect(mapStateToState,{keepLogin,cookieChecked})(App));

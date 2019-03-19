@@ -23,7 +23,9 @@ export const onLogin = (nama,pass)=>{
                 dispatch({
                     type:'LOGIN_SUCCESS',
                     payload : {username: res.data[0].username, role: res.data[0].role,id:res.data[0].id}
-                })
+                },
+                objCookie.set('userData',nama,{path:'/'})
+                )
             }else{
                 dispatch({
                     type:'USER_NOT_FOUND',  
@@ -41,6 +43,12 @@ export const onLogin = (nama,pass)=>{
     
 }
 
+export const cookieChecked = ()=>{
+    return{
+        type:"COOKIE_CHECKED"
+    }
+}
+
 export const keepLogin = (nama)=>{
     return (dispatch)=>{
         axios.get("http://localhost:2000/user",{params:{username:nama}})
@@ -49,7 +57,8 @@ export const keepLogin = (nama)=>{
                 dispatch({
                     type:'LOGIN_SUCCESS',
                     payload : res.data[0]
-                })
+                },
+                )
             }
         })
         .catch((err)=>console.log(err))

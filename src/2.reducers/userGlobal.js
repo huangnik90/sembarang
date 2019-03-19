@@ -3,7 +3,7 @@ const INITIAL_STATE = {
     username: '',
     error:'',
     loading:false,
-    role:''
+    role:'',cookie:false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,19 +28,21 @@ export default (state = INITIAL_STATE, action) => {
         case "LOGIN_SUCCESS":
             return  {...INITIAL_STATE,username:action.payload.username, 
                 role:action.payload.role,
-                id:action.payload.id}
+                id:action.payload.id,cookie:true}
         case "LOADING":
             return {...INITIAL_STATE,loading:true}
         case "USER_NOT_FOUND":
-            return {...INITIAL_STATE,error:"Try again"}
+            return {...INITIAL_STATE,error:"Try again",cookie:true}
         case "SISTEM_ERROR":
-            return {...INITIAL_STATE,error:"Sistem Error"}
+            return {...INITIAL_STATE,error:"Sistem Error",cookie:true}
         case "RESET_USER":
             return INITIAL_STATE
         case "USERNAME_NOT_AVAILABLE":
-            return {...INITIAL_STATE,error:"Username uda ada"}
+            return {...INITIAL_STATE,error:"Username uda ada",cookie:true}
         case "CART_ADD":
-            return {...INITIAL_STATE,cart:action.payload}
+            return {...INITIAL_STATE,cart:action.payload,cookie:true}
+        case "COOKIE_CHECKED":
+            return {...state,cookie:true}
         default:
             return state
     
