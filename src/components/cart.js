@@ -16,12 +16,13 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import axios from 'axios'
 import { urlApi } from '../support/urlApi';
-import {Button,Icon,Input} from 'semantic-ui-react'
+import {Button,Icon} from 'semantic-ui-react'
 import CurrencyFormat from 'react-currency-format';
 import swal from 'sweetalert';
 import {connect} from 'react-redux'
 import PageNotFound from '../components/404'
 import {cartLength} from '../1.actions/cartAction'
+import { Link } from 'react-router-dom';
 
 
 
@@ -300,7 +301,7 @@ getQuantity = ()=>{
                 }
                  
                   <TableCell align="left">{val.category}</TableCell>
-                  <TableCell align="left"><img width="50px" height="50px" src={val.img}/></TableCell>
+                  <TableCell align="left"><img width="50px" height="50px" alt="ini gambar product" src={val.img}/></TableCell>
                   <TableCell align="left">
                   {this.state.isEdit===true && this.state.editIndex===index?
                   <div>
@@ -391,7 +392,7 @@ getQuantity = ()=>{
               
              <TableRow>
                 <TableCell colSpan={7}>
-                <p>Total Harga : <b>Rp. {this.getTotalHarga()}   </b> </p>
+                <p>Total Belanja : <b>Rp. {this.getTotalHarga()}   </b> </p>
 
                 </TableCell>
                 <TableCell colSpan={6} >
@@ -402,9 +403,16 @@ getQuantity = ()=>{
                               </Button.Content>
                               </Button>
                 </TableCell>
-
+                
              </TableRow>
-             
+             {this.state.rows.length > 0 ? null:
+                  <div style={{position:"relative",left:"500px"}}>
+                      <h1> Keranjang Kosong</h1>
+                      <p>Silahkan <Link to="/">Kembali</Link></p>
+                  </div>
+              }
+
+
               {emptyRows > 0 && (
                 <TableRow style={{ height: 48 * emptyRows }}>
                   <TableCell colSpan={6} />
@@ -431,7 +439,7 @@ getQuantity = ()=>{
             </TableFooter>
           </Table>
           <Paper>
-              
+             
           </Paper>
 
         

@@ -5,12 +5,12 @@ import Product from './product'
 
 
 class Home extends React.Component{
-    state = {search:""}
-    onBtnClick = ()=>{
+    // state = {search:""}
+    // onBtnClick = ()=>{
         
-        var search = this.refs.searchBook.value 
-        // this.setState({search:search})
-    }
+    //     var search = this.refs.searchBook.value 
+    //     // this.setState({search:search})
+    // }
     render(){
         return(
             <div className="container">
@@ -44,7 +44,7 @@ class Home extends React.Component{
                     <div className="col-lg-9">
                         <div className="my-4">
                             <Carousel />
-                            <p>{this.props.idUser}</p>
+                            
                         </div>
                     </div>
                 </div>

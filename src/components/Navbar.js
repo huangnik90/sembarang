@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
 import cookie from 'universal-cookie'
 import {resetUser} from '../1.actions'
-import axios from 'axios'
+// import axios from 'axios'
 
 const kokie = new cookie()
 class HeaderKu extends Component{
@@ -120,7 +120,10 @@ class HeaderKu extends Component{
                                         </DropdownItem>
                                         <DropdownItem divider />
                                         <DropdownItem onClick={this.btnSignOut}>
+                                        <Link to="/">
                                         <i className="fas fa-sign-out-alt" /> Sign Out
+                                        </Link>
+                                        
                                         </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>

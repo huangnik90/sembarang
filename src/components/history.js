@@ -3,7 +3,6 @@ import { urlApi } from '../support/urlApi';
 import {connect } from 'react-redux'
 import axios from 'axios'
 import swal from '@sweetalert/with-react'
-import Cookie from 'universal-cookie'
 
 class History extends React.Component{
     state = {historyItem:[]}

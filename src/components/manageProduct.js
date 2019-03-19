@@ -158,7 +158,7 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableCell align="left">{val.diskon} %</TableCell>
                   <TableCell align="left">{val.desc}</TableCell>
                   <TableCell align="left">{val.category}</TableCell>
-                  <TableCell align="left"><img width="50px" height="50px" src={val.img}/></TableCell>
+                  <TableCell align="left"><img width="50px" height="50px" alt="Gambar" src={val.img}/></TableCell>
                   <TableCell align="left">
                     <Button onClick={()=>this.btnEditClick (val)} animated color="green">
                     <Button.Content visible >Edit</Button.Content>
