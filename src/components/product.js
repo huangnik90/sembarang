@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-import { urlApi} from '../support/urlApi'
+import { urlApi} from '../support/urlApi'
 import '../support/product.css'
 import {connect} from 'react-redux'
 import swal from 'sweetalert'

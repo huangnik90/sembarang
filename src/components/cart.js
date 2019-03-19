@@ -21,6 +21,7 @@ import CurrencyFormat from 'react-currency-format';
 import swal from 'sweetalert';
 import {connect} from 'react-redux'
 import PageNotFound from '../components/404'
+import {cartLength} from '../1.actions/cartAction'
 
 
 
@@ -52,6 +53,8 @@ class TablePaginationActions extends React.Component {
     );
   };
 
+  
+  
   render() {
     const { classes, count, page, rowsPerPage, theme } = this.props;
 
@@ -134,16 +137,34 @@ class CustomPaginationActionsTable extends React.Component {
   componentDidMount(){
     this.getDataApi()
   }
-  componentDidUpdate(){
-    this.getDataApi()
-  }
+  // componentDidUpdate(){
+  //   this.getDataApi()
+  // }
   getDataApi = ()=>{
       axios.get(urlApi+'/cart?userId='+this.props.id)
       .then((res)=>{
       console.log(res) 
-      this.setState({rows:res.data})})
+      this.setState({rows:res.data})
+      this.props.cartLength(this.state.rows.length)
+    })
       .catch((err)=> console.log(err))
   }
+  cekQuantity = ()=>{
+    var jumlah = this.refs.quantity.value
+    if (jumlah<1){
+        this.refs.quantity.value=1
+       swal("Warning","Tidak bole Minus","error")
+    }
+}
+getQuantity = ()=>{
+  var q=0
+  
+   for (var i=0;i<this.state.rows.length;i++){
+      q += this.state.rows[i].quantity
+   }     
+   
+   return q
+}
  
   getTotalHarga = ()=>{
    var harga=0
@@ -185,6 +206,7 @@ class CustomPaginationActionsTable extends React.Component {
       console.log(res)
 
       swal("Success","Edit Success","success")
+      this.getDataApi()
       this.setState({isEdit:false})
     })
     .catch((err)=>console.log(err))
@@ -205,39 +227,46 @@ class CustomPaginationActionsTable extends React.Component {
     axios.get(urlApi+'/cart?userId='+this.props.id)
     .then((res)=>{
       if (res.data.length>0){
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-    today = dd + '/' + mm + '/' + yyyy;
-    // var quantity = res.data.quantity
-    // var username = res.data.username 
-    // var userId =res.data.userId 
-    // var productId = res.data.productId 
-    // var nama = res.data.nama 
-    // var harga = res.data.harga 
-    // var diskon = res.data.diskon 
-    // var category = res.data.category 
-    // var img = res.data.img 
-    // var desc = res.data.desc 
-        var cart = this.state.rows
-    // var newData = {
-    //   tanggal:today,quantity,username,userId,productId,nama,harga,diskon,category,img,desc
-      
-    // }
+        for (var i=0; i<this.state.rows.length;i++){
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+          today = dd + '/' + mm + '/' + yyyy;
+          var quantity = res.data[i].quantity
+          var username = res.data[i].username 
+          var userId =res.data[i].userId 
+          var productId = res.data[i].productId 
+          var nama = res.data[i].nama 
+          var harga = res.data[i].harga 
+          var diskon = res.data[i].diskon 
+          var category = res.data[i].category 
+          var img = res.data[i].img 
+          var desc = res.data[i].desc 
+              // var cart = this.state.rows
+          var newData = {
+            tanggal:today,quantity,username,userId,productId,nama,harga,diskon,category,img,desc
+            
+          }
 
-            axios.post(urlApi+"/history/",{...cart,tanggal:today})
+          axios.post(urlApi+"/history/",newData)
             .then((res)=>{
               swal("Thank you","Please Come Again","success")
             })
             .catch((err)=>console.log(err))
 
-            axios.delete(urlApi+"/cart/")
+            axios.delete(urlApi+"/cart/"+this.state.rows[i].id)
             .then((res)=>{console.log(res)
               this.getDataApi()
-              alert("masuk dlete")
+              
             })
             .catch((err)=>console.log(err))
+
+
+        }
+   
+
+            
             
       }else{
         swal("Item Kosong","Blank","error")
@@ -248,6 +277,7 @@ class CustomPaginationActionsTable extends React.Component {
   renderJsx = ()=>{
     var jsx = this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
     .map((val,index)=>{
+      
         return (
           
             <TableRow key={val.id}>
@@ -263,8 +293,8 @@ class CustomPaginationActionsTable extends React.Component {
                   </TableCell>
                   {this.state.isEdit===true && this.state.editIndex===index?
                   <TableCell align="center">
-                  <input ref="quantity" type="number" defaultValue={val.quantity}>
-                  </input></TableCell>:
+                    <input type="number" min={1} ref="quantity" className="form-control" onChange={this.cekQuantity} defaultValue={val.quantity} style={{marginTop:"13px",width:"60px"}}></input>  
+                 </TableCell>:
                   <TableCell align="center">{val.quantity}</TableCell>
                   
                 }
@@ -341,6 +371,7 @@ class CustomPaginationActionsTable extends React.Component {
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableHead>
+              
                 <TableRow>
                     <TableCell align="center">ID</TableCell>
                     <TableCell align="center">Nama</TableCell>
@@ -427,4 +458,4 @@ const mapStateToProps = (state)=>{
   }
 }
 
-export default connect(mapStateToProps) (withStyles(styles)(CustomPaginationActionsTable));
+export default connect(mapStateToProps,{cartLength}) (withStyles(styles)(CustomPaginationActionsTable));

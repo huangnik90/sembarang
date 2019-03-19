@@ -8,6 +8,7 @@ import Cart from './components/cart'
 import ManageProduct from './components/manageProduct'
 import PageNotFound from './components/404'
 import ProductDetail from './components/productDetail'
+import History from './components/history'
 import {keepLogin} from './1.actions'
 import {connect} from 'react-redux'
 //withRouter buat sambung ke reducer dengan connect, tapi ada komponent <Route> (Routing)
@@ -26,6 +27,7 @@ class App extends Component {
       }
     
   }
+  
   render() {
     return (
       <div>
@@ -39,11 +41,11 @@ class App extends Component {
                 <Route path='/product' component={Product} />
                 <Route path='/productdetail/:terserah' component={ProductDetail} />
                 <Route path='/addproduct' component={ManageProduct} />
+                <Route path='/history' component={History} />
                 <Route path='*' component={PageNotFound} />
               </Switch>
         </ScrollTop>
-         
-         
+
       </div>
     );
   }

@@ -252,7 +252,7 @@ class CustomPaginationActionsTable extends React.Component {
       return <PageNotFound></PageNotFound>
     }else{
 
-      const { classes } = this.props;
+    const { classes } = this.props;
     const { rows, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     var {id,nama,harga,diskon,desc,category,img} =this.state.editItem
@@ -314,6 +314,11 @@ class CustomPaginationActionsTable extends React.Component {
                             <Input ref={input=> this.harga = input} className="mt-2 ml-2 mb-2" icon='dollar sign' iconPosition='left' placeholder='Masukan Harga' />
                             <Input ref={input=> this.diskon = input}className="mt-2 ml-2 mb-2"  iconPosition='left' placeholder='Masukan Diskon' />
                             <Input ref={input=> this.kategori = input} className="mt-2 ml-2 mb-2"  iconPosition='left' placeholder='Masukan Kategori' />
+                            <select ref ="dropdown"name="tableMenu" id="tableMenu" class="dropdown-menu">
+                                      <option value="Att1">Att1</option>
+                                      <option value="Att2">Att2</option>
+                                      <option value="Att3">Att3</option>
+                            </select>
                             <Input ref={input=> this.deskripsi = input}className="mt-2 ml-2 mb-2"  iconPosition='left' placeholder='Masukan Deskripsi' />
                             <Input ref={input=> this.gambar = input}className="mt-2 ml-2 mb-2"  iconPosition='left' placeholder='Masukan link gambar' />
                             <Button animated color="blue" className="mt-2 ml-2 mb-2" onClick={this.onBtnAdd}>

@@ -7,6 +7,24 @@ import {resetUser} from '../1.actions'
 
 const kokie = new cookie()
 class HeaderKu extends Component{
+    // state = {cartLength:0}
+
+    // componentDidUpdate(){
+    //     this.renderCartLength()
+    // }
+
+    
+    // renderCartLength=()=>{
+    //     axios.get('http://localhost:2000/cart')
+    //     .then((res)=>{
+    //         var cartLength=0
+    //         res.data.map((val)=>{
+    //             cartLength+=val.quantity
+    //         })
+    //         this.setState({cartLength:cartLength})
+    //     })
+    //     .catch((err)=>console.log(err))
+    // }
 
     constructor(props) {
         super(props);
@@ -76,7 +94,7 @@ class HeaderKu extends Component{
                                    <NavLink>{this.props.pass} Hi, {this.props.username}</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                <Link to="/cart"><NavLink className="btn btn-default border-primary" style={{fontSize:"14px"}}><i class="fas fa-shopping-cart"/> Cart </NavLink></Link>
+                                <Link to="/cart"><NavLink className="btn btn-default border-primary" style={{fontSize:"14px"}}><i class="fas fa-shopping-cart"/> {this.props.cart} Cart </NavLink></Link>
                                 </NavItem>
                                 <NavItem>
                                 <Link to="/Product"><NavLink className="btn btn-default" style={{fontSize:"14px"}}><i class="fas fa-tags"/> Product </NavLink></Link>
@@ -90,11 +108,11 @@ class HeaderKu extends Component{
                                         </DropdownToggle>
                                         <DropdownMenu right>
                                         <DropdownItem>
-                                            History Transaction
+                                           <Link to="/history" >History Transaction</Link>
                                         </DropdownItem>
                                         {this.props.role==="admin" ?
                                         <DropdownItem>
-                                        <Link to="/addproduct"><NavLink className="btn btn-default" style={{fontSize:"14px"}}> Manage Item </NavLink></Link>
+                                        <Link to="/addproduct"> Manage Item</Link>
                                         </DropdownItem>:null}
                                         <DropdownItem>
                                             Edit Profile
@@ -121,7 +139,8 @@ const mapStateToProps = (state) =>{
     return {
         username : state.user.username,
         id : state.user.id,
-        role: state.user.role
+        role: state.user.role,
+        cart:state.cart.cartGlobal
     }
 }
 
